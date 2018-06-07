@@ -10,5 +10,5 @@ def okapiHeaders(username,password,tenant='diku'):
     req = requests.post(url,data=json.dumps(data),headers=headers)
     if req.status_code >=400:
         raise Exception("Authentication failed {0}".format(req.text))
-    headers = headers['x-okapi-token']=req.headers['x-okapi-token']
+    headers['x-okapi-token']=req.headers['x-okapi-token']
     return headers
