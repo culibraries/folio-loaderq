@@ -1,4 +1,4 @@
-Cybercom Queue
+FOLIO loader  Queue
 ====
 
-Example Cybercom task queue. Good starting repo for various asynchronous tasks. 
+Folio Data Loader task queue. 
