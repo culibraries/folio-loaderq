@@ -23,7 +23,7 @@ def loadFixedDueDateSchedules(data=None,user=None,tenant='diku'):
     else:
         #Get sample data no auth needed for get operations
         data=getCybercomData("catalog","fixedDueDateSchedules")
-
+    print(user)
     headers = okapiHeaders(user['username'],user['password'],tenant)
     path="fixed-due-date-schedule-storage/fixed-due-date-schedules"
     added=0
