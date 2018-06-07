@@ -1,6 +1,6 @@
 from celery.task import task
 from subprocess import call,STDOUT
-import requests,os 
+import requests,os, json
 from okapi import okapiHeaders
 
 host_url =os.getenv('OKAPIURL',"http://okapihost")
