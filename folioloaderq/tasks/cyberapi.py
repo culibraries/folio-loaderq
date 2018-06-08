@@ -1,4 +1,4 @@
-import requests,json
+import requests,json,os
 
 host_url =os.getenv('HOSTURL',"http://okapihost")
 
