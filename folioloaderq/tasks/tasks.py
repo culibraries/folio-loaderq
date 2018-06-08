@@ -1,9 +1,9 @@
 from celery.task import task
 from subprocess import call,STDOUT
 import requests,os, json
-from okapi import okapiHeaders
-
-host_url =os.getenv('OKAPIURL',"http://okapihost")
+from okapi import getOkapiData, postOkapiData, okapiHeaders, getQueueConfig
+from okapi import deleteAllOkapi
+from cyberapi import getSampleData
 
 @task()
 def loadFixedDueDateSchedules(data=None,user=None,tenant='diku',tag='default'):
@@ -14,6 +14,8 @@ def loadFixedDueDateSchedules(data=None,user=None,tenant='diku',tag='default'):
         user= queueconfig.adminuser (file located next to celeryconfig)
                {"username":"< enter >","password":"< enter >"}
         tenant= 'diku' - override with string of tenant
+        tag = Inside sample data you can add a tag to filter the appropriate
+              Sample data.
     """
     if not user:
         user = getQueueConfig()['okapiAdmin']
@@ -25,8 +27,7 @@ def loadFixedDueDateSchedules(data=None,user=None,tenant='diku',tag='default'):
         data=getSampleData("catalog","fixedDueDateSchedules",query=query)
     headers = okapiHeaders(user['username'],user['password'],tenant)
     path="fixed-due-date-schedule-storage/fixed-due-date-schedules"
-    added=0
-    errors=0
+    added = errors = 0
     err=[]
     #post FixedDueDateSchedules to Okapi
     for fdds in data['results']:
@@ -38,20 +39,13 @@ def loadFixedDueDateSchedules(data=None,user=None,tenant='diku',tag='default'):
             err.append(str(inst).replace('"',''))
     return {"Inserted":added,"Errors":{"count":errors,"errors":err}}
 
-def postOkapiData(data,path,headers):
-    url="{0}:9130/{1}".format(host_url,path)
-    req=requests.post(url,json.dumps(data),headers=headers)
-    if req.status_code >=400:
-        raise Exception("Okapi API Error: {0}".format(req.text))
-    return req.json()
-def getSampleData(database,collection,query='{}',page_size=0):
-    url="{0}:9888/api/data_store/data/{1}/{2}/.json?query={3}&page_size={4}"
-    url= url.format(host_url,database,collection,query,page_size)
-    req=requests.get(url)
-    if req.status_code >=400:
-        raise Exception("Cybercom API Error: {0}".format(req.text))
-    return req.json()
-
-def getQueueConfig():
-    with open('queueconfig.json','r') as f1:
-        return json.loads(f1.read())
+    @task()
+    def deleteFixedDueDateSchedules(tenant='diku'):
+        """
+        Delete all FixedDueDateSchedules.
+        """
+        user = getQueueConfig()['okapiAdmin']
+        headers = okapiHeaders(user['username'],user['password'],tenant)
+        path="fixed-due-date-schedule-storage/fixed-due-date-schedules"
+        key = 'fixedDueDateSchedules'
+        return deleteAllOkapi(path,key, headers)
