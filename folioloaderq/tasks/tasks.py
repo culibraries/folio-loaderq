@@ -34,7 +34,7 @@ def loadFixedDueDateSchedules(data=None,user=None,tenant='diku'):
     for fdds in data['results']:
         try:
             postOkapiData(fdds,path,headers)
-            addded +=1
+            added +=1
         except Exception as inst:
             errors +=1
             err.append(str(inst))
