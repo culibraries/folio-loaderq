@@ -22,7 +22,8 @@ def loadFixedDueDateSchedules(data=None,user=None,tenant='diku'):
         data=json.loads(data)
     else:
         #Get sample data no auth needed for get operations
-        data=getCybercomData("catalog","fixedDueDateSchedules")
+        query ='{"filter":{},"projection":{"_id":0}}'
+        data=getSampleData("catalog","fixedDueDateSchedules",query=query)
     print(user)
     headers = okapiHeaders(user['username'],user['password'],tenant)
     path="fixed-due-date-schedule-storage/fixed-due-date-schedules"
@@ -45,7 +46,7 @@ def postOkapiData(data,path,headers):
     if req.status_code >=400:
         raise Exception("Okapi API Error: {0}".format(req.text))
     return req.json()
-def getCybercomData(database,collection,query='{}',page_size=0):
+def getSampleData(database,collection,query='{}',page_size=0):
     url="{0}:9888/api/data_store/data/{1}/{2}/.json?query={3}&page_size={4}"
     url= url.format(host_url,database,collection,query,page_size)
     req=requests.get(url)
