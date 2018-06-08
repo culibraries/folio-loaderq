@@ -9,12 +9,12 @@ def getOkapiData(path,headers):
         raise Exception("Okapi API Error: {0}".format(req.text))
     return req.json()
 
- def postOkapiData(data,path,headers):
-     url="{0}:9130/{1}".format(host_url,path)
-     req=requests.post(url,json.dumps(data),headers=headers)
-     if req.status_code >=400:
-         raise Exception("Okapi API Error: {0}".format(req.text))
-     return req.json()
+def postOkapiData(data,path,headers):
+    url="{0}:9130/{1}".format(host_url,path)
+    req=requests.post(url,json.dumps(data),headers=headers)
+    if req.status_code >=400:
+        raise Exception("Okapi API Error: {0}".format(req.text))
+    return req.json()
 
 def deleteOkapiData(id,path,headers):
     url="{0}:9130/{1}/{2}".format(host_url,path,id)
