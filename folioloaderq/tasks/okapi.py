@@ -1,5 +1,5 @@
 import requests, os,json
-
+import Logger
 host_url =os.getenv('HOSTURL',"http://okapihost")
 
 def getOkapiData(path,headers):
@@ -21,7 +21,7 @@ def deleteOkapiData(id,path,headers):
     req=requests.delete(url,headers=headers)
     if req.status_code >=400:
         raise Exception("Okapi API Error: {0}".format(req.text))
-    return req.json()
+    return id
 
 def deleteAllOkapi(path,key, headers):
     """
