@@ -39,13 +39,13 @@ def loadFixedDueDateSchedules(data=None,user=None,tenant='diku',tag='default'):
             err.append(str(inst).replace('"',''))
     return {"Inserted":added,"Errors":{"count":errors,"errors":err}}
 
-    @task()
-    def deleteFixedDueDateSchedules(tenant='diku'):
-        """
-        Delete all FixedDueDateSchedules.
-        """
-        user = getQueueConfig()['okapiAdmin']
-        headers = okapiHeaders(user['username'],user['password'],tenant)
-        path="fixed-due-date-schedule-storage/fixed-due-date-schedules"
-        key = 'fixedDueDateSchedules'
-        return deleteAllOkapi(path,key, headers)
+@task()
+def deleteFixedDueDateSchedules(tenant='diku'):
+    """
+    Delete all FixedDueDateSchedules.
+    """
+    user = getQueueConfig()['okapiAdmin']
+    headers = okapiHeaders(user['username'],user['password'],tenant)
+    path="fixed-due-date-schedule-storage/fixed-due-date-schedules"
+    key = 'fixedDueDateSchedules'
+    return deleteAllOkapi(path,key, headers)
