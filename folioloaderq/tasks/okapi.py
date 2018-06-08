@@ -1,5 +1,5 @@
 import requests, os,json
-import Logger
+
 host_url =os.getenv('HOSTURL',"http://okapihost")
 
 def getOkapiData(path,headers):
