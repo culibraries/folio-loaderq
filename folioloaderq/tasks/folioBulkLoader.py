@@ -18,6 +18,7 @@ def loadMarcRules(json=None):
     command = ['curl','-X POST',"-H 'x-okapi-tenant:diku'",
                 "-H 'Content-Type:application/octet-stream'",
                 "-d @{0}".format(filename),url]
+    print(command)
     result=check_output(command)
     if result =='':
         return {"status":True,"message":"Rules uploaded","error":''}
