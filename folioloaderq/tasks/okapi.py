@@ -2,6 +2,32 @@ import requests, os,json
 
 host_url =os.getenv('HOSTURL',"http://okapihost")
 
+def loadOkapiData(data,path, user=None,tenant='diku'):
+    """
+    Task loads list of records through okapi.
+    args:
+        data: list of Records
+        path: okapi path
+    kwargs:
+        user: if you want to overide user {"username":"   ","password":""}
+              default set in config file under 'okapiAdmin'
+        tenant: default - 'diku'
+    """
+    if not user:
+        user = getQueueConfig()['okapiAdmin']
+    headers = okapiHeaders(user['username'],user['password'],tenant)
+    added = errors = 0
+    err=[]
+    #post FixedDueDateSchedules to Okapi
+    for rec in data:
+        try:
+            postOkapiData(rec,path,headers)
+            added +=1
+        except Exception as inst:
+            errors +=1
+            err.append(str(inst).replace('"',''))
+    return {"path":path,"user":user['username'],"records":{"inserted":added,"errors":{"count":errors,"errors":err}}}
+
 def getOkapiData(path,headers):
     url="{0}:9130/{1}".format(host_url,path)
     req=requests.get(url,headers=headers)
