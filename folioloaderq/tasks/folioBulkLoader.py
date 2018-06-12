@@ -3,6 +3,7 @@ import requests, os,json
 from subprocess import call,check_output,STDOUT
 
 folioDataLoader_url =os.getenv('folioDataLoader_url',"http://dataloader_folio")
+json_folder= "/vagrant/{0}"
 
 @task()
 def loadMarcRules(json=None):
@@ -17,7 +18,7 @@ def loadMarcRules(json=None):
     url = "{0}:8081/load/marc-rules".format(folioDataLoader_url)
     command = ['curl','-X POST',"-H 'x-okapi-tenant:diku'",
                 "-H 'Content-Type:application/octet-stream'",
-                "-d @{0}".format(filename),url]
+                "-d @{0}".format(json_folder.format(filename)),url]
     print(command)
     result=check_output(command)
     if result =='':
