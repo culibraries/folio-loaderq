@@ -13,12 +13,12 @@ def loadMarcRules(json=None):
         with open('rules.json','w') as f1:
             f1.write(json)
     else:
-        filename='rules-default.json'
+        filename='rulesdefault.json'
 
     url = "{0}:8081/load/marc-rules".format(folioDataLoader_url)
     command = ['curl','-X POST',"-H 'x-okapi-tenant:diku'",
                 "-H 'Content-Type:application/octet-stream'",
-                "-d @{0}".format(json_folder.format(filename)),url]
+                "-d @{0}".format(filename),url]
     print(command)
     result=check_output(command)
     if result =='':
