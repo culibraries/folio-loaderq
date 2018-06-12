@@ -10,7 +10,8 @@ def loadMarcRules(json=None):
         files = {'file': ('rules.json', json)}
     else:
         with open('rules.json','r') as f1:
-            files = {'file':f1.read()}
+            files = {'file':{json.dumps(json.loads(f1.read()))}
+
     url = "{0}:8081/load/marc-rules".format(folioDataLoader_url)
     req = requests.post(url, files=files,headers=headers)
     if req.status_code < 400:
