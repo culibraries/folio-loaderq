@@ -5,7 +5,7 @@ folioDataLoader_url =os.getenv('folioDataLoader_url',"http://dataloader_folio")
 
 @task()
 def loadMarcRules(json=None):
-    headers = headers={'Content-Type':'application/octet-stream','X-Okapi-Tenant':'diku'}
+    headers = headers={'Content-Type':'application/octet-stream','x-okapi-tenant':'diku'}
     if json:
         files = {'file': ('rules.json', json)}
     else:
