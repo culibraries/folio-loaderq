@@ -9,7 +9,7 @@ def loadMarcRules(json=None):
     if json:
         files = {'file': ('rules.json', json)}
     else:
-        with open('rules.json','r') as f1:
+        with open('rules.json','rb') as f1:
             files = {'file':f1.read()}
 
     url = "{0}:8081/load/marc-rules".format(folioDataLoader_url)
