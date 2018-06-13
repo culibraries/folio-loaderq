@@ -69,5 +69,7 @@ def deleteReferenceCirculationData(tenant='diku'):
     ]
     results=[]
     for items in keyPath:
-        results.append(deleteAllOkapi(items['path'],items['key'], headers))
+        result = deleteAllOkapi(items['path'],items['key'], headers)
+        result['args']=items
+        results.append(result)
     return results
