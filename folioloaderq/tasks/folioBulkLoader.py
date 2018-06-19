@@ -37,7 +37,7 @@ def loadMarcRules(marc_rules=None):
 
 @task()
 def loadMARCdata(test=True,marc_filename=None):
-    if not marc_filename
+    if not marc_filename:
         marc_filename="data/marc.dat"
     if test:
         url = "{0}:8081/load/marc-data/test".format(folioDataLoader_url)
