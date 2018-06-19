@@ -26,7 +26,7 @@ def loadMarcRules(marc_rules=None):
     url = "{0}:8081/load/marc-rules".format(folioDataLoader_url)
     command = ['curl','-X POST',"-H", "x-okapi-tenant:diku",
                 "-H", "Content-Type:application/octet-stream",
-                "-d", "@{0}".format(filename),url]
+                "-d", "@data/{0}".format(filename),url]
     try:
         result=commandLineExec(command)
     except:
