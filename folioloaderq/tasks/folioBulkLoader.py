@@ -47,7 +47,7 @@ def loadMARCdata(test=True,marc_filename=None):
     command = ['curl','-X POST',"-H", "x-okapi-tenant:diku",
                 "-H", "Content-Type:application/octet-stream",
                 "-d", "@data/{0}".format(marc_filename),url, "-v"]
-    print("".join(command,' '))
+    print(" ".join(command))
     try:
         result=commandLineExec(command)
     except:
