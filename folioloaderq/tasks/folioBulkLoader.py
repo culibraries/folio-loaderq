@@ -1,6 +1,7 @@
 from celery.task import task
 import requests, os,json
-from subprocess import call,check_output,STDOUT
+#from subprocess import call,check_output,STDOUT
+from commandline import commandLineExec
 
 folioDataLoader_url =os.getenv('folioDataLoader_url',"http://dataloader_folio")
 
@@ -27,10 +28,12 @@ def loadMarcRules(marc_rules=None):
                 "-H", "Content-Type:application/octet-stream",
                 "-d", "@{0}".format(filename),url]
     print(command)
-    result=check_output(command)
+    try:
+        result=commandLineExec(command)
+    except:
+        raise
     if result =='':
-        return {"status":True,"message":"Rules uploaded","error":''}
-    return {"status":False,"message":"Rules not uploaded","error":result}
+    return {"status":True,"message":"Rules uploaded","output": result}
 
 
 
