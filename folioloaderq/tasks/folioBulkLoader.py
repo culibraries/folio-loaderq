@@ -32,7 +32,7 @@ def loadMarcRules(marc_rules=None):
         result=commandLineExec(command)
     except:
         raise
-    if result =='':
+
     return {"status":True,"message":"Rules uploaded","output": result}
 
 
