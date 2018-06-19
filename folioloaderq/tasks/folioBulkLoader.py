@@ -34,3 +34,22 @@ def loadMarcRules(marc_rules=None):
     if result:
         return result
     return "Successful upload of rules"
+
+@task()
+def loadMARCdata(test=True,marc_filename=None):
+    if not marc_filename
+        marc_filename="data/marc.dat"
+    if test:
+        url = "{0}:8081/load/marc-data/test".format(folioDataLoader_url)
+    else:
+        url = "{0}:8081/load/marc-data".format(folioDataLoader_url)
+    command = ['curl','-X POST',"-H", "x-okapi-tenant:diku",
+                "-H", "Content-Type:application/octet-stream",
+                "-d", "@data/{0}".format(marc_filename),url]
+    try:
+        result=commandLineExec(command)
+    except:
+        raise
+    if result:
+        return result
+    return "Successful upload of rules"
