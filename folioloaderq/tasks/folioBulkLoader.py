@@ -39,13 +39,15 @@ def loadMarcRules(marc_rules=None):
 def loadMARCdata(test=True,marc_filename=None):
     if not marc_filename:
         marc_filename="data/marc.dat"
+
+    url = "{0}:8081/load/marc-data".format(folioDataLoader_url)
     if test:
         url = "{0}:8081/load/marc-data/test".format(folioDataLoader_url)
-    else:
-        url = "{0}:8081/load/marc-data".format(folioDataLoader_url)
+
     command = ['curl','-X POST',"-H", "x-okapi-tenant:diku",
                 "-H", "Content-Type:application/octet-stream",
-                "-d", "@data/{0}".format(marc_filename),url]
+                "-d", "@data/{0}".format(marc_filename),url, "-v"]
+    print("".join(command,' '))
     try:
         result=commandLineExec(command)
     except:
