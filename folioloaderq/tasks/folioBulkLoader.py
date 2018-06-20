@@ -4,7 +4,7 @@ import requests, os,json
 from commandline import commandLineExec
 
 folioDataLoader_url =os.getenv('folioDataLoader_url',"http://dataloader_folio")
-
+host_url =os.getenv('HOSTURL',"http://okapihost")
 
 @task()
 def loadMarcRules(marc_rules=None):
@@ -38,15 +38,15 @@ def loadMarcRules(marc_rules=None):
 @task()
 def loadMARCdata(test=True,marc_filename=None):
     if not marc_filename:
-        marc_filename="data/marc.dat"
+        marc_filename="marc.dat"
 
-    url = "{0}:8081/load/marc-data".format(folioDataLoader_url)
+    url = "{0}:8081/load/marc-data?storageURL=http://{1}:9139".format(folioDataLoader_url,host_url)
     if test:
         url = "{0}:8081/load/marc-data/test".format(folioDataLoader_url)
 
     command = ['curl','-X POST',"-H", "x-okapi-tenant:diku",
                 "-H", "Content-Type:application/octet-stream",
-                "-d", "@data/{0}".format(marc_filename),url, "-v"]
+                "-d", "@data/{0}".format(marc_filename),url]
     print(" ".join(command))
     try:
         result=commandLineExec(command)
@@ -54,4 +54,4 @@ def loadMARCdata(test=True,marc_filename=None):
         raise
     if result:
         return result
-    return "Successful upload of rules"
+    return "Successful MARC data upload"
