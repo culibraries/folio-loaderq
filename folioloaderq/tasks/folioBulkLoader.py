@@ -37,6 +37,15 @@ def loadMarcRules(marc_rules=None):
 
 @task()
 def loadMARCdata(test=True,marc_filename=None):
+    """
+    Load MARC Data from mod-data-loader.
+
+    Signature:
+        loadMARCdata(test=True,marc_filename=None)
+    kwargs:
+        test = True
+        marc_filename = None - Default set to sample MARC binary file
+    """
     if not marc_filename:
         marc_filename="marc.dat"
 
