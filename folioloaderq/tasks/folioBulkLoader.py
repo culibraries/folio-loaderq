@@ -56,7 +56,8 @@ def loadMARCdata(test=True,marc_filename=None):
         try:
             temp=[]
             for rec in result.split("\n"):
-                temp.append(json.loads(rec))
+                data= rec.split('|')[1]
+                temp.append(json.loads(data))
             return temp
         except:
             return result
