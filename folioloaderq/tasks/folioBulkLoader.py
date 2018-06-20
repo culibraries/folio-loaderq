@@ -40,7 +40,7 @@ def loadMARCdata(test=True,marc_filename=None):
     if not marc_filename:
         marc_filename="marc.dat"
 
-    url = "{0}:8081/load/marc-data?storageURL=http://{1}:9139".format(folioDataLoader_url,host_url)
+    url = "{0}:8081/load/marc-data?storageURL={1}:9139".format(folioDataLoader_url,host_url)
     if test:
         url = "{0}:8081/load/marc-data/test".format(folioDataLoader_url)
 
