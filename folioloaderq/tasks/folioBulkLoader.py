@@ -53,5 +53,11 @@ def loadMARCdata(test=True,marc_filename=None):
     except:
         raise
     if result:
-        return result
+        try:
+            temp=[]
+            for rec in result.split("\n"):
+                temp.append(json.loads(rec))
+            return temp
+        except:
+            return result
     return "Successful MARC data upload"
